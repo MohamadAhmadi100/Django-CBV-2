@@ -12,8 +12,10 @@
         {% endif %}
         {% for todo in todos %}
             <div class="card-body bg-light">
-                <div class="card-title p-4">
+                <div class="p-4 d-flex justify-content-between">
                     <a class="text-decoration-none" href="{% url 'todo:todo_detail' todo.slug %}">{{ todo }}</a>
+                    <small><a href="{% url 'todo:delete_tode' todo.id %}" class="btn-sm btn-danger">Delete</a></small>
+
                 </div>
             </div>
             <br>
