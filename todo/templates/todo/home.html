@@ -6,19 +6,22 @@
                 <form action="{% url 'todo:home' %}" method="post" class="col-md-12 d-flex justify-content-center">
                     {{ form }}{% csrf_token %}
                     <input type="submit" class="btn-sm btn-primary align-self-center mx-2" value="Add Todo">
+                </form>
             </div>
-            </form>
             <hr>
         {% endif %}
         {% for todo in todos %}
             <div class="card-body bg-light">
                 <div class="p-4 d-flex justify-content-between">
                     <a class="text-decoration-none" href="{% url 'todo:todo_detail' todo.slug %}">{{ todo }}</a>
-                    <div class="">
-                        <small><a href="{% url 'todo:update_todo' todo.id %}" class="btn-sm btn-info">Edit</a></small>
-                        <small><a href="{% url 'todo:delete_todo' todo.id %}"
-                                  class="btn-sm btn-danger">Delete</a></small>
-                    </div>
+                    {% if request.user.is_authenticated %}
+                        <div class="">
+                            <small><a href="{% url 'todo:update_todo' todo.id %}"
+                                      class="btn-sm btn-info">Edit</a></small>
+                            <small><a href="{% url 'todo:delete_todo' todo.id %}"
+                                      class="btn-sm btn-danger">Delete</a></small>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <br>

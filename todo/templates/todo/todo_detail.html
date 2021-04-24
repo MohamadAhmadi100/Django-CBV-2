@@ -11,4 +11,24 @@
             </small>
         </div>
     </div>
+    <div class="container col-md-11 mt-5">
+        {% if request.user.is_authenticated %}
+            <form action="" method="post" class="d-flex justify-content-center">
+                {{ form }}{% csrf_token %}
+                <input type="submit" class="btn-sm btn-primary align-self-center mx-2" value="Comment">
+            </form>
+            <hr>
+        {% endif %}
+    </div>
+    <div class="container col-md-9 mt-5 card">
+        {% for comment in todo.t_comments.all %}
+            <div class="m-3">
+                {{ comment.title }} - <small class="text-muted">{{ comment.created }}</small>
+            </div>
+            <div class="card-body text-muted mx-4">
+                {{ comment.body }}
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
 {% endblock content %}

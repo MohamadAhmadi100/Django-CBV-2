@@ -1,17 +1,31 @@
-from .models import Todo
+from .models import Todo, Comment
 from django.views.generic import ListView, DetailView, FormView, DeleteView, UpdateView
-from .forms import AddTodoForm
+from django.views.generic.edit import FormMixin
+from .forms import AddTodoForm, AddCommentForm
 from django.urls import reverse, reverse_lazy
 from django.utils.text import slugify
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class TodoDetailView(DetailView):
+class TodoDetailView(LoginRequiredMixin, FormMixin, DetailView):
     model = Todo
     template_name = 'todo/todo_detail.html'
     context_object_name = 'todo'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
+    form_class = AddCommentForm
+
+    def get_success_url(self):
+        return reverse('todo:todo_detail', kwargs={'slug': self.object.slug})
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            comment = Comment(title=form.cleaned_data['title'], body=form.cleaned_data['body'], todo=self.object)
+            comment.save()
+        return super().form_valid(form)
 
 
 class TodoListView(FormView, ListView):
