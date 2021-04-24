@@ -14,8 +14,11 @@
             <div class="card-body bg-light">
                 <div class="p-4 d-flex justify-content-between">
                     <a class="text-decoration-none" href="{% url 'todo:todo_detail' todo.slug %}">{{ todo }}</a>
-                    <small><a href="{% url 'todo:delete_tode' todo.id %}" class="btn-sm btn-danger">Delete</a></small>
-
+                    <div class="">
+                        <small><a href="{% url 'todo:update_todo' todo.id %}" class="btn-sm btn-info">Edit</a></small>
+                        <small><a href="{% url 'todo:delete_todo' todo.id %}"
+                                  class="btn-sm btn-danger">Delete</a></small>
+                    </div>
                 </div>
             </div>
             <br>
