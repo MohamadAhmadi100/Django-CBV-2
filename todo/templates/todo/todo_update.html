@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="d-flex justify-content-center m-5">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="d-flex justify-content-center">
+                <input type="submit" value="Edit" class="btn btn-sm btn-danger m-2">
+                <a class="btn btn-sm btn-light m-2" href="{% url 'todo:home' %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}}
