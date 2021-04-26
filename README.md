@@ -1,1 +1,1 @@
-# Django-CBV-2
+# Django-Todo-CBV
