@@ -1,6 +1,7 @@
-from django.urls import path
 from django.contrib.auth import views as auth_views
-from . import views
+from django.urls import path
+
+from . import views, api_views
 
 app_name = 'accounts'
 urlpatterns = [
@@ -11,4 +12,8 @@ urlpatterns = [
     path('reset-done/', views.PasswordResetDone.as_view(), name='password_reset_done'),
     path('reset-confirm/<uidb64>/<token>', views.PasswordResetConfirm.as_view(), name='password_reset_confirm'),
     path('reset-complete/', views.PasswordResetComplete.as_view(), name='password_reset_complete'),
+    path('api/login/', api_views.LoginAPIView.as_view(), name='login'),
+    path('api/users/', api_views.UserListCreateAPIView.as_view(), name='user-list'),
+    path('api/users/<int:pk>/', api_views.UserDetailAPIView.as_view(), name='user-detail'),
+    path('register/', api_views.RegisterView.as_view(), name='register'),
 ]
